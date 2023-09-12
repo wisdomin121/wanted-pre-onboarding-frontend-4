@@ -1,3 +1,9 @@
 import styled from 'styled-components'
 
-export const MainStyled = styled.div``
+export const MainStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 97vh;
+`
