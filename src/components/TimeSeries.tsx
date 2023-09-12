@@ -13,6 +13,7 @@ import {
 
 import { CustomTooltip } from 'components'
 import { Data } from 'types/type'
+import { Theme } from 'styles/DefaultTheme'
 
 import { TimeSeriesStyled } from './TimeSeries.styled'
 
@@ -35,7 +36,7 @@ function TimeSeries({ datas, clickedLoc, locClicked }: TimeSeriesProps) {
             left: 20,
           }}
         >
-          <CartesianGrid stroke="#f5f5f5" />
+          <CartesianGrid stroke={Theme.colors.grid} />
           <XAxis dataKey="time" scale="band" />
           <YAxis
             yAxisId="Area"
@@ -56,21 +57,28 @@ function TimeSeries({ datas, clickedLoc, locClicked }: TimeSeriesProps) {
             yAxisId="Bar"
             dataKey="valueBar"
             barSize={20}
-            fill="#9EA1FE"
+            fill={Theme.colors.unclickedBar}
             onClick={(data) => {
               locClicked(data.loc)
             }}
           >
             {datas.map((data: Data, idx: number) => {
-              return <Cell key={idx} fill={clickedLoc.has(data.loc) ? '#5641C0' : '#9EA1FE'} />
+              return (
+                <Cell
+                  key={idx}
+                  fill={
+                    clickedLoc.has(data.loc) ? Theme.colors.clickedBar : Theme.colors.unclickedBar
+                  }
+                />
+              )
             })}
           </Bar>
           <Area
             yAxisId="Area"
             type="monotone"
             dataKey="valueArea"
-            fill="#EC8091"
-            stroke="#EC8091"
+            fill={Theme.colors.area}
+            stroke={Theme.colors.area}
           />
         </ComposedChart>
       </ResponsiveContainer>

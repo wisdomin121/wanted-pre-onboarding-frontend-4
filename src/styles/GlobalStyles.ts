@@ -13,11 +13,11 @@ ${reset},
     html, body {
         height: 100%;
         font-family: 'Spoqa Han Sans Neo', 'sans-serif';
-        font-size: ${({ theme }) => theme.fontSize.default};
-        color: ${({ theme }) => theme.color.basicText};
+        font-size: '16px';
+        color: '#000000';
     }
     body {
-        background: ${({ theme }) => theme.color.mainBg};
+        background: '#ffffff';
     }
     a {
         color: inherit;
