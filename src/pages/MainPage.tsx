@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react'
 
 import { LocButtons, TimeSeries } from 'components'
-
-import { MainStyled } from './MainPage.styled'
 import { dataAPI } from 'apis/data'
 import { Data } from 'types/type'
+
+import { MainStyled } from './MainPage.styled'
 
 function MainPage() {
   const [datas, setDatas] = useState<Data[]>([])
   const [locs, setLocs] = useState<string[]>([])
-  const [clickedLoc, setClickedLoc] = useState<string>('')
+  const [clickedLoc, setClickedLoc] = useState<Set<string>>(new Set())
 
   const locClicked = (loc: string) => {
-    if (clickedLoc === loc) setClickedLoc('')
-    else setClickedLoc(loc)
+    if (clickedLoc.has(loc)) {
+      setClickedLoc((prev) => {
+        prev.delete(loc)
+        return new Set(prev)
+      })
+    } else {
+      setClickedLoc((prev) => new Set(prev.add(loc)))
+    }
   }
 
   useEffect(() => {
@@ -43,7 +49,7 @@ function MainPage() {
   return (
     <MainStyled>
       <LocButtons locs={locs} clickedLoc={clickedLoc} locClicked={locClicked} />
-      <TimeSeries datas={datas} />
+      <TimeSeries datas={datas} clickedLoc={clickedLoc} locClicked={locClicked} />
     </MainStyled>
   )
 }

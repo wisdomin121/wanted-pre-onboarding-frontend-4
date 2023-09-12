@@ -2,6 +2,7 @@ import {
   Area,
   Bar,
   CartesianGrid,
+  Cell,
   ComposedChart,
   Legend,
   ResponsiveContainer,
@@ -17,9 +18,11 @@ import { TimeSeriesStyled } from './TimeSeries.styled'
 
 interface TimeSeriesProps {
   datas: Data[]
+  clickedLoc: Set<string>
+  locClicked: (loc: string) => void
 }
 
-function TimeSeries({ datas }: TimeSeriesProps) {
+function TimeSeries({ datas, clickedLoc, locClicked }: TimeSeriesProps) {
   return (
     <TimeSeriesStyled>
       <ResponsiveContainer width="100%" height={500}>
@@ -49,7 +52,19 @@ function TimeSeries({ datas }: TimeSeriesProps) {
           />
           <Tooltip content={<CustomTooltip />} />
           <Legend />
-          <Bar yAxisId="Bar" dataKey="valueBar" barSize={20} fill="#9EA1FE" />
+          <Bar
+            yAxisId="Bar"
+            dataKey="valueBar"
+            barSize={20}
+            fill="#9EA1FE"
+            onClick={(data) => {
+              locClicked(data.loc)
+            }}
+          >
+            {datas.map((data: Data, idx: number) => {
+              return <Cell key={idx} fill={clickedLoc.has(data.loc) ? '#5641C0' : '#9EA1FE'} />
+            })}
+          </Bar>
           <Area
             yAxisId="Area"
             type="monotone"
