@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 
 import { dataAPI } from 'apis/data'
+import { CustomTooltip } from 'components'
 
 interface Data {
   time: string
@@ -69,7 +70,7 @@ function TimeSeries() {
           orientation="right"
           label={{ value: 'Bar', angle: -90, position: 'insideRight' }}
         />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />} />
         <Legend />
         <Bar yAxisId="Bar" dataKey="valueBar" barSize={20} fill="#9EA1FE" />
         <Area yAxisId="Area" type="monotone" dataKey="valueArea" fill="#EC8091" stroke="#EC8091" />
